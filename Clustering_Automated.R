@@ -5,7 +5,7 @@ install.packages('dummy')
 # H E R E
 vmcluster<-function()
 {
-  library(formattable)
+  
   library(xlsx)
   t<-readline(prompt = "Type 'csv' (or) 'xlsx':")
   if("csv" %in% t){
