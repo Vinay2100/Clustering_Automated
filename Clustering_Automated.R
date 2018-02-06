@@ -3,8 +3,6 @@ install.packages('xlsx')
 install.packages('dummy')
 # P R E S S "Ctrl+ENTER"
 # H E R E
-
-vmcluster<-function()
 {
   
   library(xlsx)
@@ -207,7 +205,7 @@ vmcluster<-function()
     }
   }
 }
-#U S E   T H E   "vmcluster()"   F U N C T I O N   &   C A L L   I T    A N Y W H R
-vmcluster()
+
+
 
 
