@@ -2,7 +2,7 @@
 install.packages('xlsx') 
 install.packages('dummy')
 # P R E S S "Ctrl+ENTER"
-# H E R E
+# H E R E The first click and last click 
 {
   
   library(xlsx)
