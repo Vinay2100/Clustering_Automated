@@ -1,18 +1,20 @@
 #install it if it's not present on ur system
-install.packages('xlsx') 
+install.packages('xlsx')
 install.packages('dummy')
+install.packages("animation")
 # P R E S S "Ctrl+ENTER"
-# H E R E The first click and last click 
+# H E R E The first click and last click
+vmclustering<-function()
 {
   
   library(xlsx)
   t<-readline(prompt = "Type 'csv' (or) 'xlsx':")
   if("csv" %in% t){
-    dataset<-read.csv(file.choose()) #or 
+    dataset<-read.csv(file.choose()) #or
   }
   if("xlsx" %in% t){
     sh<-readline(prompt = "Enter sheet no. of the xlsx file:")
-    dataset<-read.xlsx(file.choose(),as.integer(sh)) 
+    dataset<-read.xlsx(file.choose(),as.integer(sh))
   }
   
   {
@@ -53,17 +55,16 @@ install.packages('dummy')
       library('dummy')
       dataset2<-data.frame(dummy(x=dataset2))
       
-      dataset_dummy<-data.frame(dataset1,dataset2)
-      View(dataset_dummy)
       {
         #Normalization function for Binary scaling
-        normalize <- function(x) 
+        normalize <- function(x)
         {
           return ((x - min(x)) / (max(x) - min(x)))
         }
         dfNorm <- as.data.frame(lapply(dataset1, normalize))
         
         normalized_data<-data.frame(dfNorm,dataset2)#cleaned dataset with only numeric data is taken
+        View(normalized_data)
         j<-1
         k<-data.frame()
         wss<-NULL
@@ -88,10 +89,10 @@ install.packages('dummy')
     {
       mlast=50
     }
-    for (m in 2:mlast) 
+    for (m in 2:mlast)
     {
       km<-kmeans(normalized_data,centers = m)
-      wss<-c(wss,km$tot.withinss) 
+      wss<-c(wss,km$tot.withinss)
       k[j,1]<-km$tot.withinss
       k[j,2]<-km$betweenss
       j<-j+1
@@ -102,7 +103,7 @@ install.packages('dummy')
     colnames(k)<-c("totalwithinss","betweenss")
     
     readinteger<-function()
-    { 
+    {
       i <- readline(prompt="Enter the desired(or)decided value of clusters: ")
       return(as.integer(i))
     }
@@ -112,6 +113,10 @@ install.packages('dummy')
     final<-data.frame(km$cluster,dataset)
     View(kmeans_aggregate)
     print(km)####
+    library(animation)
+    
+    km <- kmeans.ani(normalized_data,readinteger())
+    
     
     f<-readline(prompt = "Do you want to store the membership file: y(or)n :")
     if("y" %in% f)
@@ -128,9 +133,9 @@ install.packages('dummy')
       print(km)#####
       
     }
-    ####################################    
+    ####################################
     readiter<-function()
-    { 
+    {
       ik <- readline(prompt="Want to run again? If yes press 1::If no press 0: ")
       return(as.integer(ik))
     }
@@ -145,10 +150,10 @@ install.packages('dummy')
       {
         mlast=50
       }
-      for (m in 2:mlast) 
+      for (m in 2:mlast)
       {
         km<-kmeans(normalized_data,centers = m)
-        wss<-c(wss,km$tot.withinss) 
+        wss<-c(wss,km$tot.withinss)
         k[j,1]<-km$tot.withinss
         k[j,2]<-km$betweenss
         j<-j+1
@@ -165,6 +170,11 @@ install.packages('dummy')
       final<-data.frame(km$cluster,dataset)
       View(kmeans_aggregate)
       print(km)
+      
+      library(animation)
+      
+      km <- kmeans.ani(normalized_data,readinteger())
+      km$centers
       
       
       f<-readline(prompt = "Do you want to store the membership file: y(or)n :")
@@ -193,7 +203,7 @@ install.packages('dummy')
           y <- readline(prompt="Enter the name of the file with xlsx extension: ")
           library(xlsx)
           write.xlsx(final,file = y)
-           
+          
           if("n" %in% f)
           {
             print("clustering done !!!")
@@ -205,7 +215,5 @@ install.packages('dummy')
     }
   }
 }
-
-
-
+vmclustering()
 
