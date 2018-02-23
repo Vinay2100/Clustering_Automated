@@ -116,7 +116,7 @@ vmclustering<-function()
     library(animation)
     
     km <- kmeans.ani(normalized_data,readinteger())
-    
+    km$centers
     
     f<-readline(prompt = "Do you want to store the membership file: y(or)n :")
     if("y" %in% f)
@@ -170,7 +170,6 @@ vmclustering<-function()
       final<-data.frame(km$cluster,dataset)
       View(kmeans_aggregate)
       print(km)
-      
       library(animation)
       
       km <- kmeans.ani(normalized_data,readinteger())
@@ -193,7 +192,7 @@ vmclustering<-function()
       }
       
       rpeat=readiter()
-      
+    }
       if(rpeat==0)
       {
         
@@ -203,16 +202,16 @@ vmclustering<-function()
           y <- readline(prompt="Enter the name of the file with xlsx extension: ")
           library(xlsx)
           write.xlsx(final,file = y)
-          
+        }  
           if("n" %in% f)
           {
             print("clustering done !!!")
           }
           
           
-        }
+        
       }
-    }
+    
   }
 }
 vmclustering()
