@@ -214,5 +214,6 @@ vmclustering<-function()
     
   }
 }
+
 vmclustering()
 
