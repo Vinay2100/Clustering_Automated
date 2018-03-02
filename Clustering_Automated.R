@@ -6,7 +6,7 @@ install.packages("animation")
 # H E R E The first click and last click
 vmclustering<-function()
 {
-  
+  library(readxl)
   library(xlsx)
   t<-readline(prompt = "Type 'csv' (or) 'xlsx':")
   if("csv" %in% t){
@@ -14,7 +14,7 @@ vmclustering<-function()
   }
   if("xlsx" %in% t){
     sh<-readline(prompt = "Enter sheet no. of the xlsx file:")
-    dataset<-read.xlsx(file.choose(),as.integer(sh))
+    dataset<-read_excel(file.choose(),as.integer(sh))
   }
   
   {
