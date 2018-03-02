@@ -82,6 +82,8 @@ vmclustering<-function()
       
       
     }
+    plots<-function()
+      {
     wss<-NULL
     n<-nrow(dataset)
     mlast<-as.integer(2*sqrt(n/2))
@@ -108,6 +110,12 @@ vmclustering<-function()
       return(as.integer(i))
     }
     
+    readinteger1<-function()
+    {
+      i <- readline(prompt="Enter the no. of clusters for Animation: ")
+      return(as.integer(i))
+    }
+    
     km<-kmeans(normalized_data,readinteger())
     kmeans_aggregate<-aggregate(normalized_data,by=list(km$cluster),FUN=mean)
     final<-data.frame(km$cluster,dataset)
@@ -115,7 +123,7 @@ vmclustering<-function()
     print(km)####
     library(animation)
     
-    km <- kmeans.ani(normalized_data,readinteger())
+    km <- kmeans.ani(normalized_data,readinteger1())
     km$centers
     
     f<-readline(prompt = "Do you want to store the membership file: y(or)n :")
@@ -133,6 +141,8 @@ vmclustering<-function()
       print(km)#####
       
     }
+    }
+    plots()
     ####################################
     readiter<-function()
     {
@@ -143,54 +153,7 @@ vmclustering<-function()
     
     while(rpeat==1){
       
-      wss<-NULL
-      n<-nrow(dataset)
-      mlast<-as.integer(2*sqrt(n/2))
-      if(mlast>50)
-      {
-        mlast=50
-      }
-      for (m in 2:mlast)
-      {
-        km<-kmeans(normalized_data,centers = m)
-        wss<-c(wss,km$tot.withinss)
-        k[j,1]<-km$tot.withinss
-        k[j,2]<-km$betweenss
-        j<-j+1
-      }
-      wss
-      plot(2:mlast,wss,type = "b",xlab = "no. of clusters",ylab = "tot.withinss")
-      title(main = "scree-plot")
-      colnames(k)<-c("totalwithinss","betweenss")
-      
-      
-      
-      km<-kmeans(normalized_data,readinteger())
-      kmeans_aggregate<-aggregate(normalized_data,by=list(km$cluster),FUN=mean)
-      final<-data.frame(km$cluster,dataset)
-      View(kmeans_aggregate)
-      print(km)
-      library(animation)
-      
-      km <- kmeans.ani(normalized_data,readinteger())
-      km$centers
-      
-      
-      f<-readline(prompt = "Do you want to store the membership file: y(or)n :")
-      if("y" %in% f)
-      {
-        y <- readline(prompt="Enter the name of the file with xlsx extension: ")
-        library(xlsx)
-        write.xlsx(final,file = y)
-        
-      }
-      if("n" %in% f)
-      {
-        View(kmeans_aggregate)
-        print(km)
-        
-      }
-      
+      plots()
       rpeat=readiter()
     }
       if(rpeat==0)
