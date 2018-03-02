@@ -1,4 +1,5 @@
 #install it if it's not present on ur system
+install.packages('readxl')
 install.packages('xlsx')
 install.packages('dummy')
 install.packages("animation")
@@ -38,6 +39,18 @@ vmclustering<-function()
       
     }
     
+    d<-readline(prompt = "Do you want to remove any Rows : y (or) n :")
+    if("y" %in% d)
+    {
+      j<-as.integer(strsplit(readline(prompt = "Enter the index you want to remove[seperate the index with commas if multiple]: "),",")[[1]])
+      dataset_numerical<-data.frame(dataset_numerical[-c(j),])
+      View(dataset_numerical)
+    }
+    else
+    {
+      dataset_numerical<-dataset_numerical[]
+      
+    }
     
     Index<-c(1:ncol(dataset_numerical))
     Numeric<-sapply(dataset_numerical, is.numeric)
@@ -118,7 +131,7 @@ vmclustering<-function()
     
     km<-kmeans(normalized_data,readinteger())
     kmeans_aggregate<-aggregate(dataset_numerical,by=list(km$cluster),FUN=mean)
-    final<-data.frame(km$cluster,dataset)
+    final<-data.frame(km$cluster,dataset_numerical)
     View(kmeans_aggregate)
     print(km)####
     library(animation)
@@ -143,7 +156,7 @@ vmclustering<-function()
     }
     }
     plots()
-    ####################################
+ #########################################################################################
     readiter<-function()
     {
       ik <- readline(prompt="Want to run again? If yes press 1::If no press 0: ")
